@@ -1,0 +1,494 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+# To check that user is root or not 
+
+FILE=vol.py
+if [ -f "$FILE" ]; then
+    echo "$FILE exists."
+else
+    echo "Please run script from volatility tool directory."
+    exit
+fi
+# To check if volitility is present or not 
+
+echo Running_script_as_rootuser
+
+echo "Enter the folder name / server name for storing all artifacts "
+read tempfolder
+
+namee=$tempfolder
+mkdir $tempfolder
+# variable stuff
+
+cd $tempfolder 
+tempfolder=$(pwd)
+echo $tempfolder 
+cd .. 
+# making temp folder in the /volatility-master for storinig all the artifacts.
+
+echo "Enter the operating system of dump"
+echo "1. Windows"
+echo "2. Linux"
+read memos
+case $memos in
+    1) echo "Memory Dump OS is $memos.Windows";;
+    2) echo "Memory Dump OS is $memos.Linus";;
+    *) echo "Please enter proper number.";; 
+esac
+# reading the operating system of memory dump 
+
+
+echo "Enter the location of dump and it should look like /patent folders/Memory Dump.Extenction"
+read location
+echo "$location"
+#reading location of the memory dump for processing.
+
+
+case $memos in
+    1)  
+       while :
+       do
+        echo "1. VistaSP0x64            - A Profile for Windows Vista SP0 x64"
+        echo "2. VistaSP0x86            - A Profile for Windows Vista SP0 x86"
+        echo "3. VistaSP1x64            - A Profile for Windows Vista SP1 x64"
+        echo "4. VistaSP1x86            - A Profile for Windows Vista SP1 x86"
+        echo "5. VistaSP2x64            - A Profile for Windows Vista SP2 x64"
+        echo "6. VistaSP2x86            - A Profile for Windows Vista SP2 x86"
+        echo "7. Win10x64               - A Profile for Windows 10 x64"
+        echo "8. Win10x64_10586         - A Profile for Windows 10 x64 (10.0.10586.306 / 2016-04-23)"
+        echo "9. Win10x64_14393         - A Profile for Windows 10 x64 (10.0.14393.0 / 2016-07-16)"
+        echo "10. Win10x86              - A Profile for Windows 10 x86"
+        echo "11. Win10x86_10586        - A Profile for Windows 10 x86 (10.0.10586.420 / 2016-05-28)"
+        echo "12. Win10x86_14393        - A Profile for Windows 10 x86 (10.0.14393.0 / 2016-07-16)"
+        echo "13. Win2003SP0x86         - A Profile for Windows 2003 SP0 x86"
+        echo "14. Win2003SP1x64         - A Profile for Windows 2003 SP1 x64"
+        echo "15. Win2003SP1x86         - A Profile for Windows 2003 SP1 x86"
+        echo "16. Win2003SP2x64         - A Profile for Windows 2003 SP2 x64"
+        echo "17. Win2003SP2x86         - A Profile for Windows 2003 SP2 x86"
+        echo "18. Win2008R2SP0x64       - A Profile for Windows 2008 R2 SP0 x64"
+        echo "19. Win2008R2SP1x64       - A Profile for Windows 2008 R2 SP1 x64"
+        echo "20. Win2008R2SP1x64_23418 - A Profile for Windows 2008 R2 SP1 x64 (6.1.7601.23418 / 2016-04-09)"
+        echo "21. Win2008SP1x64         - A Profile for Windows 2008 SP1 x64"
+        echo "22. Win2008SP1x86         - A Profile for Windows 2008 SP1 x86"
+        echo "23. Win2008SP2x64         - A Profile for Windows 2008 SP2 x64"
+        echo "24. Win2008SP2x86         - A Profile for Windows 2008 SP2 x86"
+        echo "25. Win2012R2x64          - A Profile for Windows Server 2012 R2 x64"
+        echo "26. Win2012R2x64_18340    - A Profile for Windows Server 2012 R2 x64 (6.3.9600.18340 / 2016-05-13)"
+        echo "27. Win2012x64            - A Profile for Windows Server 2012 x64"
+        echo "28. Win2016x64_14393      - A Profile for Windows Server 2016 x64 (10.0.14393.0 / 2016-07-16)"
+        echo "29. Win7SP0x64            - A Profile for Windows 7 SP0 x64"
+        echo "30. Win7SP0x86            - A Profile for Windows 7 SP0 x86"
+        echo "31. Win7SP1x64            - A Profile for Windows 7 SP1 x64"
+        echo "32. Win7SP1x64_23418      - A Profile for Windows 7 SP1 x64 (6.1.7601.23418 / 2016-04-09)"
+        echo "33. Win7SP1x86            - A Profile for Windows 7 SP1 x86"
+        echo "34. Win7SP1x86_23418      - A Profile for Windows 7 SP1 x86 (6.1.7601.23418 / 2016-04-09)"
+        echo "35. Win81U1x64            - A Profile for Windows 8.1 Update 1 x64"
+        echo "36. Win81U1x86            - A Profile for Windows 8.1 Update 1 x86"
+        echo "37. Win8SP0x64            - A Profile for Windows 8 x64"
+        echo "38. Win8SP0x86            - A Profile for Windows 8 x86"
+        echo "39. Win8SP1x64            - A Profile for Windows 8.1 x64"
+        echo "40. Win8SP1x64_18340      - A Profile for Windows 8.1 x64 (6.3.9600.18340 / 2016-05-13)"
+        echo "41. Win8SP1x86            - A Profile for Windows 8.1 x86"
+        echo "42. WinXPSP1x64           - A Profile for Windows XP SP1 x64"
+        echo "43. WinXPSP2x64           - A Profile for Windows XP SP2 x64"
+        echo "44. WinXPSP2x86           - A Profile for Windows XP SP2 x86"
+        echo "45. WinXPSP3x86           - A Profile for Windows XP SP3 x86"
+        echo "46. If you are not sure about the profile it this option will suggest related profile."
+        echo "Enter the profile of the memory dump"
+        read opp
+        case $opp in
+            1) prof="VistaSP0x64";;
+                done;;
+            2) prof="VistaSP0x86";;
+                done;;
+            3) prof="VistaSP1x64";;
+                done;;
+            4) prof="VistaSP1x86";;
+                done;;
+            5) prof="VistaSP2x64";;
+                done;;
+            6) prof="VistaSP2x86";;
+                done;;
+            7) prof="Win10x64";;
+                done;;
+            8) prof="Win10x64_10586";;
+                done;;
+            9) prof="Win10x64_14393";;
+                done;;
+            10) prof="Win10x86";;
+                done;;
+            11) prof="Win10x86_10586";;
+                done;;
+            12) prof="Win10x86_14393";;
+                done;;
+            13) prof="Win2003SP0x86";;
+                done;;
+            14) prof="Win2003SP1x64";;
+                done;;
+            15) prof="Win2003SP1x86";;
+                done;;
+            16) prof="Win2003SP2x64";;
+                done;;
+            17) prof="Win2003SP2x86";;
+                done;;
+            18) prof="Win2008R2SP0x64";;
+                done;;
+            19) prof="Win2008R2SP1x64";;
+                done;;
+            20) prof="Win2008R2SP1x64_23418";;
+                done;;
+            21) prof="Win2008SP1x64";;
+                done;;
+            22) prof="Win2008SP1x86";;
+                done;;
+            23) prof="Win2008SP2x64";;
+                done;;
+            24) prof="Win2008SP2x86";;
+                done;;
+            25) prof="Win2012R2x64";;
+                done;;
+            26) prof="Win2012R2x64_18340";;
+                done;;
+            27) prof="Win2012x64";;
+                done;;
+            28) prof="Win2016x64_14393";;
+                done;;
+            29) prof="Win7SP0x64";;
+                done;;
+            30) prof="Win7SP0x86";;
+                done;;
+            31) prof="Win7SP1x64";;
+                done;;
+            32) prof="Win7SP1x64_23418";;
+                done;;
+            33) prof="Win7SP1x86";;
+                done;;
+            34) prof="Win7SP1x86_23418";;
+                done;;
+            35) prof="Win81U1x64";;
+                done;;
+            36) prof="Win81U1x86";;
+                done;;
+            37) prof="Win8SP0x64";;
+                done;;
+            38) prof="Win8SP0x86";;
+                done;;
+            39) prof="Win8SP1x64";;
+                done;;
+            40) prof="Win8SP1x64_18340";;
+                done;;
+            41) prof="Win8SP1x86";;
+                done;;
+            42) prof="WinXPSP1x64";;
+                done;;
+            43) prof="WinXPSP2x64";;
+                done;;
+            44) prof="WinXPSP2x86";;
+                done;;
+            45) prof="WinXPSP3x86";;
+                done;;
+            46) python2.7 vol.py -f $location imageinfo;;
+            *) echo "Please enter proper number.";; 
+        esac
+            sleep 1
+    done;;
+    while :
+        do
+        echo "  1.amcache       -Print AmCache information"
+        echo "  2.apihooks      -Detect API hooks in process and kernel memory"
+        echo "  3.atoms         -Print session and window station atom tables"
+        echo "  4.atomscan      -Pool scanner for atom tables"
+        echo "  5.auditpol      -Prints out the Audit Policies from HKLM > SECURITY > Policy > PolAdtEv"
+        echo "  6.bigpools      -Dump the big page pools using BigPagePoolScanner    "
+        echo "  7.bioskbd       -Reads the keyboard buffer from Real Mode memory "
+        echo "  8.cachedump     -Dumps cached domain hashes from memory  "
+        echo "  9.callbacks     -Print system-wide notification routines "
+        echo "  10.clipboard    -Extract the contents of the windows clipboard   "
+        echo "  11.cmdline      -Display process command-line arguments  "
+        echo "  12.cmdscan      -Extract command history by scanning for _COMMAND_HISTORY    "
+        echo "  13.connections  -Print list of open connections [Windows XP and 2003 Only]   "
+        echo "  14.connscan     -Pool scanner for tcp connections    "
+        echo "  15.consoles     -Extract command history by scanning for _CONSOLE_INFORMATION    "
+        echo "  16.crashinfo    -Dump crash-dump information "
+        echo "  17.deskscan     -Poolscaner for tagDESKTOP (desktops)    "
+        echo "  18.devicetree   -Show device tree    "
+        echo "  19.dlldump      -Dump DLLs from a process address space  "
+        echo "  20.dlllist      -Print list of loaded dlls for each process  "
+        echo "  21.driverirp    -Driver IRP hook detection   "
+        echo "  22.drivermodule -Associate driver objects to kernel modules  "
+        echo "  23.driverscan   -Pool scanner for driver objects "
+        echo "  24.dumpcerts    -Dump RSA private and public SSL keys    "
+        echo "  25.dumpfiles    -Extract memory mapped and cached files  "
+        echo "  26.dumpregistry -Dumps registry files out to disk    "
+        echo "  27.editbox      -Displays information about Edit controls. (Listbox experimental.)   "
+        echo "  28.envars       -Display process environment variables   "
+        echo "  29.eventhooks   -Print details on windows event hooks    "
+        echo "  30.evtlogs      -Extract Windows Event Logs (XP/2003 only)   "
+        echo "  31.filescan     -Pool scanner for file objects   "
+        echo "  32.gahti        -Dump the USER handle type information   "
+        echo "  33.gditimers    -Print installed GDI timers and callbacks    "
+        echo "  34.gdt          -Display Global Descriptor Table "
+        echo "  35.getservicesids   -   Get the names of services in the Registry and return Calculated SID "
+        echo "  36.getsids      -Print the SIDs owning each process  "
+        echo "  37.handles      -Print list of open handles for each process "
+        echo "  38.hashdump     -Dumps passwords hashes (LM/NTLM) from memory    "
+        echo "  39.hibinfo      -Dump hibernation file information   "
+        echo "  40.hivedump     -Prints out a hive   "
+        echo "  41.hivelist     -Print list of registry hives.   "
+        echo "  42.hivescan     -Pool scanner for registry hives "
+        echo "  43.hpakextract  -Extract physical memory from an HPAK file   "
+        echo "  44.hpakinfo     -Info on an HPAK file    "
+        echo "  45.idt          -Display Interrupt Descriptor Table  "
+        echo "  46.iehistory    -Reconstruct Internet Explorer cache / history   "
+        echo "  47.imagecopy    -Copies a physical address space out as a raw DD image   "
+        echo "  48.imageinfo    -Identify information for the image  "
+        echo "  49.impscan      -Scan for calls to imported functions    "
+        echo "  50.joblinks     -Print process job link information  "
+        echo "  51.kdbgscan     -Search for and dump potential KDBG values   "
+        echo "  52.kpcrscan     -Search for and dump potential KPCR values   "
+        echo "  53.ldrmodules   -Detect unlinked DLLs    "
+        echo "  54.limeinfo     -Dump Lime file format information   "
+        echo "  55.machoinfo    -Dump Mach-O file format information "
+        echo "  56.malfind      -Find hidden and injected code   "
+        echo "  57.mbrparser    -Scans for and parses potential Master Boot Records (MBRs)   "
+        echo "  58.memdump      -Dump the addressable memory for a process   "
+        echo "  59.memmap       -Print the memory map    "
+        echo "  60.messagehooks -List desktop and thread window message hooks    "
+        echo "  61.mftparser    -Scans for and parses potential MFT entries  "
+        echo "  62.moddump      -Dump a kernel driver to an executable file sample   "
+        echo "  63.modscan      -Pool scanner for kernel modules "
+        echo "  64.modules      -Print list of loaded modules    "
+        echo "  65.multiscan    -Scan for various objects at once    "
+        echo "  66.mutantscan   -Pool scanner for mutex objects  "
+        echo "  67.netscan      -Scan a Vista (or later) image for connections and sockets   "
+        echo "  68.notepad      -List currently displayed notepad text   "
+        echo "  69.objtypescan  -Scan for Windows object type objects    "
+        echo "  70.patcher      -Patches memory based on page scans  "
+        echo "  71.poolpeek     -Configurable pool scanner plugin    "
+        echo "  72.pooltracker  -Show a summary of pool tag usage    "
+        echo "  73.printkey     -Print a registry key, and its subkeys and values    "
+        echo "  74.privs        -Display process privileges  "
+        echo "  75.procdump     -Dump a process to an executable file sample "
+        echo "  76.pslist       -Print all running processes by following the EPROCESS lists "
+        echo "  77.psscan       -Pool scanner for process objects    "
+        echo "  78.pstree       -Print process list as a tree "
+        echo "  79.psxview      -Find hidden processes with various process listings "
+        echo "  80.qemuinfo     -Dump Qemu information   "
+        echo "  81.raw2dmp      -Converts a physical memory sample to a windbg crash dump    "
+        echo "  82.screenshot   -Save a pseudo-screenshot based on GDI windows   "
+        echo "  83.servicediff  -List Windows services (ala Plugx)   "
+        echo "  84.sessions     -List details on _MM_SESSION_SPACE (user logon sessions) "
+        echo "  85.shellbags    -Prints ShellBags info   "
+        echo "  86.shimcache    -Parses the Application Compatibility Shim Cache registry key    "
+        echo "  87.shutdowntime -Print ShutdownTime of machine from registry "
+        echo "  88.sockets      -Print list of open sockets  "
+        echo "  89.sockscan     -Pool scanner for tcp socket objects "
+        echo "  90.ssdt         -Display SSDT entries    "
+        echo "  91.strings      -Match physical offsets to virtual addresses (may take a while, VERY "
+        echo "  92.svcscan      -Scan for Windows services   "
+        echo "  93.symlinkscan  -Pool scanner for symlink objects    "
+        echo "  94.thrdscan     -Pool scanner for thread objects "
+        echo "  95.threads      -Investigate _ETHREAD and _KTHREADs  "
+        echo "  96.timeliner    -Creates a timeline from various artifacts in memory "
+        echo "  97.timers       -Print kernel timers and associated module DPCs  "
+        echo "  98.truecryptmaster  -Recover TrueCrypt 7.1a Master Keys  "
+        echo "  99.truecryptpassphrase  -   TrueCrypt Cached Passphrase Finder  "
+        echo "  100.truecryptsummary    -   TrueCrypt Summary   "
+        echo "  101.unloadedmodules -   Print list of unloaded modules  "
+        echo "  102.userassist  -Print userassist registry keys and information  "
+        echo "  103.userhandles -Dump the USER handle tables "
+        echo "  104.vaddump     -Dumps out the vad sections to a file    "
+        echo "  105.vadinfo     -Dump the VAD info   "
+        echo "  106.vadtree     -Walk the VAD tree and display in tree format    "
+        echo "  107.vadwalk     -Walk the VAD tree   "
+        echo "  108.vboxinfo    -Dump virtualbox information "
+        echo "  109.verinfo     -Prints out the version information from PE images   "
+        echo "  110.vmwareinfo  -Dump VMware VMSS/VMSN information   "
+        echo "  111.volshell    -Shell in the memory image   "
+        echo "  112.win10cookie -Find the ObHeaderCookie value for Windows 10    "
+        echo "  113.windows     -Print Desktop Windows (verbose details) "
+        echo "  114.wintree     -Print Z-Order Desktop Windows Tree  "
+        echo "  115.wndscan     -Pool scanner for window stations    "
+        echo "  116.yarascan    -Scan process or kernel memory with Yara signatures  "
+        echo "Press <CTRL+C> to .exit."
+        echo "Enter the operation that you want to perform on memory dump"
+        read opp
+        echo "Enter type of output"
+                echo "1. .TXT"
+                echo "2. .CSV"
+                read out
+                case $out in
+                    1) out=".txt";;
+                    2) out=".csv";;
+                esac
+        case $opp in
+            1) python2.7 vol.py -f $location --profile=$prof amcache > $tempfolder/amcache$out;;
+            2) python2.7 vol.py -f $location --profile=$prof apihooks > $tempfolder/Apihooks.txt;;
+            3) python2.7 vol.py -f $location --profile=$prof atoms > $tempfolder/Atoms.csv;;
+            4) python2.7 vol.py -f $location --profile=$prof atomscan > $tempfolder/Atomsscan.csv;;
+            5) python2.7 vol.py -f $location --profile=$prof auditpol > $tempfolder/Auditpol.txt;;
+            6) python2.7 vol.py -f $location --profile=$prof bigpools > $tempfolder/Bigpools.txt;;
+            7) python2.7 vol.py -f $location --profile=$prof bioskbd > $tempfolder/Bioskbd.txt;;
+            8) python2.7 vol.py -f $location --profile=$prof cachedump > $tempfolder/Cachedump.txt;;
+            9) python2.7 vol.py -f $location --profile=$prof callbacks >$tempfolder/callbacks$out;;
+            10) python2.7 vol.py -f $location --profile=$prof clipboard >$tempfolder/clipboard$out;;
+            11) python2.7 vol.py -f $location --profile=$prof cmdline >$tempfolder/cmdline$out;;
+            12) python2.7 vol.py -f $location --profile=$prof cmdscan >$tempfolder/cmdscan$out;;
+            13) python2.7 vol.py -f $location --profile=$prof connections >$tempfolder/connections$out;;
+            14) python2.7 vol.py -f $location --profile=$prof connscan >$tempfolder/connscan$out;;
+            15) python2.7 vol.py -f $location --profile=$prof consoles >$tempfolder/consoles$out;;
+            16) python2.7 vol.py -f $location --profile=$prof crashinfo >$tempfolder/crashinfo$out;;
+            17) python2.7 vol.py -f $location --profile=$prof deskscan >$tempfolder/deskscan$out;;
+            18) python2.7 vol.py -f $location --profile=$prof devicetree >$tempfolder/devicetree$out;;
+            19) mkdir dlldump
+                python2.7 vol.py -f $location --profile=$prof dlldump >$tempfolder/dlldump;;
+            20) python2.7 vol.py -f $location --profile=$prof dlllist >$tempfolder/dlllist$out;;
+            21) python2.7 vol.py -f $location --profile=$prof driverirp >$tempfolder/driverirp$out;;
+            22) python2.7 vol.py -f $location --profile=$prof drivermodule >$tempfolder/drivermodule$out;;
+            23) python2.7 vol.py -f $location --profile=$prof driverscan >$tempfolder/driverscan$out;;
+            24) mkdir certs
+                python2.7 vol.py -f $location --profile=$prof dumpcerts >$tempfolder/certs;;
+            25) python2.7 vol.py -f $location --profile=$prof dumpfiles >$tempfolder/dumpfiles$out;;
+            26) mkdir registery_files
+                python2.7 vol.py -f $location --profile=$prof dumpregistry >$tempfolder/registry_files;;
+            27) python2.7 vol.py -f $location --profile=$prof editbox >$tempfolder/editbox$out;;
+            28) python2.7 vol.py -f $location --profile=$prof envars >$tempfolder/envars$out;;
+            29) python2.7 vol.py -f $location --profile=$prof eventhooks >$tempfolder/eventhooks$out;;
+            30) mkdir events_logs
+                python2.7 vol.py -f $location --profile=$prof evtlogs >$tempfolder/events_logs;;
+            31) python2.7 vol.py -f $location --profile=$prof filescan >$tempfolder/filescan$out;;
+            32) python2.7 vol.py -f $location --profile=$prof gahti >$tempfolder/gahti$out;;
+            33) python2.7 vol.py -f $location --profile=$prof gditimers >$tempfolder/gditimers$out;;
+            34) python2.7 vol.py -f $location --profile=$prof gdt >$tempfolder/gdt$out;;
+            35) python2.7 vol.py -f $location --profile=$prof getservicesids >$tempfolder/getservicesids$out;;
+            36) python2.7 vol.py -f $location --profile=$prof getsids >$tempfolder/getsids$out;;
+            37) python2.7 vol.py -f $location --profile=$prof handles >$tempfolder/handles$out;;
+            38) python2.7 vol.py -f $location --profile=$prof hashdump >$tempfolder/hashdump$out;;
+            39) python2.7 vol.py -f $location --profile=$prof hibinfo >$tempfolder/hibinfo$out;;
+            40) python2.7 vol.py -f $location --profile=$prof hivedump >$tempfolder/hivedump$out;;
+            41) python2.7 vol.py -f $location --profile=$prof hivelist >$tempfolder/hivelist$out;;
+            42) python2.7 vol.py -f $location --profile=$prof hivescan >$tempfolder/hivescan$out;;
+            43) python2.7 vol.py -f $location --profile=$prof hpakextract >$tempfolder/hpakextract$out;;
+            44) python2.7 vol.py -f $location --profile=$prof hpakinfo >$tempfolder/hpakinfo$out;;
+            45) python2.7 vol.py -f $location --profile=$prof idt >$tempfolder/idt$out;;
+            46) python2.7 vol.py -f $location --profile=$prof iehistory >$tempfolder/iehistory$out;;
+            47) mkdir imagecopy
+                python2.7 vol.py -f $location --profile=$prof imagecopy -o $tempfolder/imagecopy/image.raw;;
+            48) python2.7 vol.py -f $location --profile=$prof imageinfo >$tempfolder/imageinfo$out;;
+            49) python2.7 vol.py -f $location --profile=$prof impscan >$tempfolder/impscan$out;;
+            50) python2.7 vol.py -f $location --profile=$prof joblinks >$tempfolder/joblinks$out;;
+            51) python2.7 vol.py -f $location --profile=$prof kdbgscan >$tempfolder/kdbgscan$out;;
+            52) python2.7 vol.py -f $location --profile=$prof kpcrscan >$tempfolder/kpcrscan$out;;
+            53) python2.7 vol.py -f $location --profile=$prof ldrmodules >$tempfolder/ldrmodules$out;;
+            54) python2.7 vol.py -f $location --profile=$prof limeinfo >$tempfolder/limeinfo$out;;
+            55) python2.7 vol.py -f $location --profile=$prof machoinfo >$tempfolder/machoinfo$out;;
+            56) python2.7 vol.py -f $location --profile=$prof malfind >$tempfolder/malfind$out;;
+            57) python2.7 vol.py -f $location --profile=$prof mbrparser >$tempfolder/mbrparser$out;;
+            58) mkdir memdumps
+                python2.7 vol.py -f $location --profile=$prof memdump -D $tempfolder/memdumps;;
+            59) python2.7 vol.py -f $location --profile=$prof memmap >$tempfolder/memmap$out;;
+            60) python2.7 vol.py -f $location --profile=$prof messagehooks >$tempfolder/messagehooks$out;;
+            61) python2.7 vol.py -f $location --profile=$prof mftparser >$tempfolder/mftparser$out;;
+            62) mkdir moddumps
+                python2.7 vol.py -f $location --profile=$prof moddump -D $tempfolder/moddumps;;
+            63) python2.7 vol.py -f $location --profile=$prof modscan >$tempfolder/modscan$out;;
+            64) python2.7 vol.py -f $location --profile=$prof modules >$tempfolder/modules$out;;
+            65) python2.7 vol.py -f $location --profile=$prof multiscan >$tempfolder/multiscan$out;;
+            66) python2.7 vol.py -f $location --profile=$prof mutantscan >$tempfolder/mutantscan$out;;
+            67) python2.7 vol.py -f $location --profile=$prof netscan >$tempfolder/netscan$out;;
+            68) python2.7 vol.py -f $location --profile=$prof notepad >$tempfolder/notepad$out;;
+            69) python2.7 vol.py -f $location --profile=$prof objtypescan >$tempfolder/objtypescan$out;;
+            70) python2.7 vol.py -f $location --profile=$prof patcher >$tempfolder/patcher$out;;
+            71) python2.7 vol.py -f $location --profile=$prof poolpeek >$tempfolder/poolpeek$out;;
+            72) python2.7 vol.py -f $location --profile=$prof pooltracker >$tempfolder/pooltracker$out;;
+            73) python2.7 vol.py -f $location --profile=$prof printkey >$tempfolder/printkey$out;;
+            74) python2.7 vol.py -f $location --profile=$prof privs >$tempfolder/privs$out;;
+            75) python2.7 vol.py -f $location --profile=$prof procdump >$tempfolder/procdump$out;;
+            76) python2.7 vol.py -f $location --profile=$prof pslist >$tempfolder/pslist$out;;
+            77) python2.7 vol.py -f $location --profile=$prof psscan >$tempfolder/psscan$out;;
+            78) python2.7 vol.py -f $location --profile=$prof pstree >$tempfolder/pstree$out;;
+            79) python2.7 vol.py -f $location --profile=$prof psxview >$tempfolder/psxview$out;;
+            80) python2.7 vol.py -f $location --profile=$prof qemuinfo >$tempfolder/qemuinfo$out;;
+            81) mkdir raw2dump
+                python2.7 vol.py -f $location --profile=$prof raw2dmp -o copy.dmp -D $tempfolder/raw2dump ;;
+            82) mkdir screenshots
+                python2.7 vol.py -f $location --profile=$prof screenshot -D $tempfolder/screenshots;;
+            83) python2.7 vol.py -f $location --profile=$prof servicediff >$tempfolder/servicediff$out;;
+            84) python2.7 vol.py -f $location --profile=$prof sessions >$tempfolder/sessions$out;;
+            85) python2.7 vol.py -f $location --profile=$prof shellbags >$tempfolder/shellbags$out;;
+            86) python2.7 vol.py -f $location --profile=$prof shimcache >$tempfolder/shimcache$out;;
+            87) python2.7 vol.py -f $location --profile=$prof shutdowntime >$tempfolder/shutdowntime$out;;
+            88) python2.7 vol.py -f $location --profile=$prof sockets >$tempfolder/sockets$out;;
+            89) python2.7 vol.py -f $location --profile=$prof sockscan >$tempfolder/sockscan$out;;
+            90) python2.7 vol.py -f $location --profile=$prof ssdt >$tempfolder/ssdt$out;;
+            91) python2.7 vol.py -f $location --profile=$prof strings >$tempfolder/strings$out;;
+            92) python2.7 vol.py -f $location --profile=$prof svcscan >$tempfolder/svcscan$out;;
+            93) python2.7 vol.py -f $location --profile=$prof symlinkscan >$tempfolder/symlinkscan$out;;
+            94) python2.7 vol.py -f $location --profile=$prof thrdscan >$tempfolder/thrdscan$out;;
+            95) python2.7 vol.py -f $location --profile=$prof threads >$tempfolder/threads$out;;
+            96) python2.7 vol.py -f $location --profile=$prof timeliner >$tempfolder/timeliner$out;;
+            97) python2.7 vol.py -f $location --profile=$prof timers >$tempfolder/timers$out;;
+            98) python2.7 vol.py -f $location --profile=$prof truecryptmaster >$tempfolder/truecryptmaster$out;;
+            99) python2.7 vol.py -f $location --profile=$prof truecryptpassphrase >$tempfolder/truecryptpassphrase$out;;
+            100) python2.7 vol.py -f $location --profile=$prof truecryptsummary >$tempfolder/truecryptsummary$out;;
+            101) python2.7 vol.py -f $location --profile=$prof unloadedmodules >$tempfolder/unloadedmodules$out;;
+            102) python2.7 vol.py -f $location --profile=$prof userassist >$tempfolder/userassist$out;;
+            103) python2.7 vol.py -f $location --profile=$prof userhandles >$tempfolder/userhandles$out;;
+            104) mkdir vad
+                 python2.7 vol.py -f $location --profile=$prof vaddump -D $tempfolder/vad;;
+            105) python2.7 vol.py -f $location --profile=$prof vadinfo >$tempfolder/vadinfo$out;;
+            106) python2.7 vol.py -f $location --profile=$prof vadtree >$tempfolder/vadtree$out;;
+            107) python2.7 vol.py -f $location --profile=$prof vadwalk >$tempfolder/vadwalk$out;;
+            108) python2.7 vol.py -f $location --profile=$prof vboxinfo >$tempfolder/vboxinfo$out;;
+            109) python2.7 vol.py -f $location --profile=$prof verinfo >$tempfolder/verinfo$out;;
+            110) python2.7 vol.py -f $location --profile=$prof vmwareinfo >$tempfolder/vmwareinfo$out;;
+            111) python2.7 vol.py -f $location --profile=$prof volshell >$tempfolder/volshell$out;;
+            112) python2.7 vol.py -f $location --profile=$prof win10cookie >$tempfolder/win10cookie$out;;
+            113) python2.7 vol.py -f $location --profile=$prof windows >$tempfolder/windows$out;;
+            114) python2.7 vol.py -f $location --profile=$prof wintree >$tempfolder/wintree$out;;
+            115) python2.7 vol.py -f $location --profile=$prof wndscan >$tempfolder/wndscan$out;;
+            116) python2.7 vol.py -f $location --profile=$prof yarascan >$tempfolder/yarascan$out;;
+            *) echo "Please enter proper number.";; 
+        esac
+        echo "Done"
+        sleep 1
+    done;;
+    2) 
+     echo "1. VistaSP0x64            - A Profile for Windows Vista SP0 x64"
+
+        echo "46. If you are not sure about the profile it this option will suggest related profile."
+        echo "Enter the profile of the memory dump"
+        read opp
+        case $opp in
+            1) prof="VistaSP0x64";;
+            46) python2.7 vol.py -f $location imageinfo;;
+            *) echo "Please enter proper number.";; 
+        esac
+    while :
+        do
+        echo "  1.amcache       -Print AmCache information"
+        echo "Press <CTRL+C> to .exit."
+        echo "Enter the operation that you want to perform on memory dump"
+        read opp
+        echo "Enter type of output"
+                echo "1. .TXT"
+                echo "2. .CSV"
+                read out
+                case $out in
+                    1) out=".txt";;
+                    2) out=".csv";;
+                esac
+        case $opp in
+            1) python2.7 vol.py -f $location --profile=$prof amcache > $tempfolder/amcache$out;;
+            *) echo "Please enter proper number.";; 
+        esac
+        echo "Done"
+        sleep 1
+    done;;
+    *) echo "Please enter proper number.";; 
+esac
+
